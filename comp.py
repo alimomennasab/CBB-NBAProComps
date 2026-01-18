@@ -44,15 +44,23 @@ NBA_CBB_FEATURE_MAP = {
     'BLK%': 'blk_per',
     'TOV%': 'TO_per', 
     'USG%': 'usg',
+    'TS%': 'TS_per',
+    "BPM": "bpm",
+    "OBPM": "obpm",
+    "DBPM": "dbpm",
 }
 nba_features = list(NBA_CBB_FEATURE_MAP.keys())
 cbb_features = list(NBA_CBB_FEATURE_MAP.values())
+
+# convert cbb fractions to percentages
+cbb_df[["TS_per", "ftr", "TP_per"]] = cbb_df[["TS_per", "ftr", "TP_per"]] / 100.0
 
 nba_df = nba_df.dropna(subset=nba_features).reset_index(drop=True)
 cbb_df = cbb_df.dropna(subset=cbb_features).reset_index(drop=True)
 
 nba_feats_df = nba_df[nba_features]
 cbb_feats_df = cbb_df[cbb_features]
+
 
 # rename cbb features to match nba features
 cbb_feats_df = cbb_feats_df.rename(
@@ -61,6 +69,18 @@ cbb_feats_df = cbb_feats_df.rename(
 print("COLUMNS AFTER RENAME:")
 print(nba_feats_df.columns)
 print(cbb_feats_df.columns)
+
+def comp_nba_cbb_player(name: str):
+    cbb_player_stats = cbb_feats_df[cbb_df['player_name'] == name]
+    nba_player_stats = nba_feats_df[nba_df['name'] == name]
+
+    print(f"Comparing stats for player: {name}")
+    for key in NBA_CBB_FEATURE_MAP.keys():
+        cbb_value = cbb_player_stats[key].values
+        nba_value = nba_player_stats[key].values
+        print(f"{key}: CBB={cbb_value}, NBA={nba_value}")
+comp_nba_cbb_player("Zion Williamson")
+print(f"Zion test: {nba_feats_df[nba_df['name'] == 'Zion Williamson']}")
 
 # standardize features
 scaler = StandardScaler()
@@ -73,6 +93,7 @@ comp_df = pd.DataFrame()
 # For each CBB player's name, get their stats from CBB CSV, and do cosine simialarity with every NBA player's stats from NBA CSV
 similarity_mat = cosine_similarity(cbb_scaled, nba_scaled)
 rows = []
+k = 3
 for cbb_idx in range(len(cbb_df)):
     cbb_player = cbb_df.iloc[cbb_idx]
     cbb_name = cbb_player['player_name']
@@ -81,9 +102,9 @@ for cbb_idx in range(len(cbb_df)):
     cbb_pos = cbb_player['archetype']
 
     cbb_player_similarities = similarity_mat[cbb_idx]
-    top_5_comps = np.argsort(cbb_player_similarities)[-5:][::-1]
+    top_k_comps = np.argsort(cbb_player_similarities)[-k:][::-1]
 
-    for rank, nba_idx in enumerate(top_5_comps, start=1):
+    for rank, nba_idx in enumerate(top_k_comps, start=1):
         nba_player = nba_df.iloc[nba_idx]
         nba_name = nba_player['name']
         nba_team = nba_player['Tm']
