@@ -90,7 +90,7 @@ export default function App() {
 
             <button
               className="button-primary"
-              onClick={handleSearch}
+              onClick={() => handleSearch()}
               disabled={!query}
             >
               GENERATE COMPS
