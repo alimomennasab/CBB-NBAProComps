@@ -65,6 +65,7 @@ For each CBB player:
 - This project is limited to only utilizing advanced metrics that are present in both CBB and NBA datasets. However, there were only a few advanced stats that both datasets shared. These datasets could be expanded with more advanced stats in common.
 - College and NBA playing styles can differ significantly.
 - Era differences should be accounted for (ex. weigh 3PA less in modern era)
+- I wanted to avoid positional filtering as the NBA strays away from traditional positions, but this leads to bad comps: college Stephen Curry comps to Lebron & Kobe. Possible solution: consider height/weight data
 
 ---
 ## Usage
