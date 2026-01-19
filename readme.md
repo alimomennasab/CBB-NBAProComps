@@ -2,6 +2,7 @@
 
 This project generates NBA player comparisons for college basketball (CBB) prospects using shared advanced statistics. The goal is to compare playstyles and roles by calculating cosine similarity values from advanced statistics that are adverse to usage/scaling. 
 
+Live site: https://cbb-nbacomps.netlify.app
 ---
 
 ## Datasets
