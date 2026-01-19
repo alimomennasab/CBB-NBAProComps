@@ -56,7 +56,7 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 
 .modal p {
@@ -70,8 +70,6 @@ body {
 }
 
 
-
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -82,6 +80,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  align-self: center;
 }
 button:focus,
 button:focus-visible {
@@ -98,15 +97,20 @@ button:focus-visible {
   font-size: 16px;
   align-content: center;
   justify-content: center;
+  align-self: center;
 }
 
 .dropdown {
+  width: 90%;
   list-style: none;
   margin: 6px 0 0;
   padding: 0;
   background: #111;
   border-radius: 8px;
   overflow: hidden;
+  align-self: center;
+  overflow-y: auto;
+  max-height: 180px;
 }
 
 .dropdown li {

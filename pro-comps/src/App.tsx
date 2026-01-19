@@ -20,7 +20,7 @@ export default function App() {
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
-    fetch("/public/comps.json")
+    fetch("/comps.json")
       .then(res => res.json())
       .then((json: CompRow[]) => setData(json));
   }, []);
@@ -38,7 +38,7 @@ export default function App() {
         .filter(name =>
           name.toLowerCase().includes(query.toLowerCase())
         )
-        .slice(0, 6);
+        // .slice(0, 6);
 
   const handleSearch = () => {
     const matches = data
@@ -59,7 +59,7 @@ export default function App() {
       <div className="modal">
         {!results ? (
           <>
-            <h1>CBB to NBA Comps</h1>
+            <h1 style={{ alignSelf: "center" }}>CBB to NBA Comps</h1>
 
             <input
               className="search-input"
@@ -92,7 +92,10 @@ export default function App() {
           </>
         ) : (
           <>
-            <h2>{query} ({results[0].cbb_pos}) top NBA comps</h2>
+            <h2>
+              {query}
+              {results[0].cbb_pos && ` (${results[0].cbb_pos})`} top NBA comps
+            </h2>
 
             {results.map(r => (
               <div className="result" key={`${r.nba_name}-${r.nba_year}`}>
