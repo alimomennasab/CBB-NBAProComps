@@ -40,14 +40,17 @@ export default function App() {
         )
         // .slice(0, 6);
 
-  const handleSearch = () => {
+  const handleSearch = (overrideQuery?: string) => {
+    const q = overrideQuery ?? query;
+
     const matches = data
-      .filter(d => d.cbb_name.toLowerCase() === query.toLowerCase())
+      .filter(d => d.cbb_name.toLowerCase() === q.toLowerCase())
       .sort((a, b) => a.similarity_rank - b.similarity_rank)
       .slice(0, 3);
 
     setResults(matches);
   };
+
 
   const reset = () => {
     setQuery("");
@@ -74,7 +77,10 @@ export default function App() {
                 {suggestions.map(name => (
                   <li
                     key={name}
-                    onClick={() => setQuery(name)}
+                    onClick={() => {
+                      setQuery(name);
+                      handleSearch(name);
+                    }}
                   >
                     {name}
                   </li>
