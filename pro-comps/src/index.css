@@ -50,7 +50,6 @@ body {
 .modal {
   background: var(--card);
   padding: 32px;
-  border-radius: 12px;
   width: 500px;
   height: auto;
   max-width: 90%;
@@ -60,10 +59,18 @@ body {
   align-items: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.modal p {
+  margin: 8px 0;
+  justify-content: left;
 }
+
+.modal h4 {
+  margin: 12px 0 6px;
+  justify-content: left;
+}
+
+
+
 
 button {
   border-radius: 8px;
@@ -158,6 +165,13 @@ button:focus-visible {
   color: var(--accent);
 }
 
+.link{
+  color: var(--accent);
+}
+
+.link:hover {
+  color: var(--accent);
+}
 
 @media (prefers-color-scheme: light) {
   :root {

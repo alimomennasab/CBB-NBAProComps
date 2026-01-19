@@ -158,16 +158,25 @@ export default function App() {
           </p>
 
           <p>
-            For each CBB player, we rank all NBA players by similarity and select the{" "}
-            <span className="accent">top 3</span> as that player’s NBA comps.
+            For each CBB player, we rank all NBA players by similarity and select the top 3 as that player’s NBA comps.
           </p>
-
+          <h4>Limitations & future improvements: </h4>
           <p>
-            <span className="accent">Limitations & future improvements</span>:
-            <br />
             • Expand datasets with more advanced stats
             <br />
-            • Account for era and league differences between CBB and NBA (ex. weigh 3PA less in modern era)
+            • Account for era/league (ex. weigh 3PA less in modern era)
+          </p>
+
+
+          <p> Source code: {" "} 
+            <a
+              href="https://github.com/alimomennasab/CBB-NBAProComps"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link"
+            >
+              GitHub repository
+            </a>
           </p>
 
           <button
@@ -176,6 +185,7 @@ export default function App() {
           >
             Close
           </button>
+
         </div>
       </div>
     )}
