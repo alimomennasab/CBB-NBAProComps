@@ -17,6 +17,7 @@ export default function App() {
   const [data, setData] = useState<CompRow[]>([]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<CompRow[] | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     fetch("/public/comps.json")
@@ -86,7 +87,7 @@ export default function App() {
               onClick={handleSearch}
               disabled={!query}
             >
-              Generate comps
+              GENERATE COMPS
             </button>
           </>
         ) : (
@@ -96,7 +97,7 @@ export default function App() {
             {results.map(r => (
               <div className="result" key={`${r.nba_name}-${r.nba_year}`}>
                 <strong>{r.nba_name}</strong>{" "}
-                <span>
+                <span style={{ color: "var(--accent)" }}>
                   ({r.nba_pos}, {r.nba_team}, {r.nba_year}, Score: {r.similarity_score.toFixed(2)})
                 </span>
               </div>
@@ -110,7 +111,76 @@ export default function App() {
             </button>
           </>
         )}
+        <button
+          className="button-secondary"
+          onClick={() => setShowInfo(true)}
+        >
+          How does this work?
+        </button>
       </div>
+      {showInfo && (
+      <div className="overlay">
+        <div className="modal">
+          <h2>
+            How does this work?
+          </h2>
+
+          <p>
+            This demo compares college basketball players (CBB) to NBA players using advanced statistics
+            that exist in both datasets.
+          </p>
+
+          <p>
+            These include shooting profile (
+            <span className="accent">3PAr</span>,{" "}
+            <span className="accent">TS%</span>,{" "}
+            <span className="accent">FTr</span>), playmaking and usage (
+            <span className="accent">AST%</span>,{" "}
+            <span className="accent">USG%</span>,{" "}
+            <span className="accent">TOV%</span>), rebounding (
+            <span className="accent">ORB%</span>,{" "}
+            <span className="accent">DRB%</span>), defense (
+            <span className="accent">STL%</span>,{" "}
+            <span className="accent">BLK%</span>), and overall impact (
+            <span className="accent">BPM</span>,{" "}
+            <span className="accent">OBPM</span>,{" "}
+            <span className="accent">DBPM</span>).
+          </p>
+
+          <p>
+            Each CBB and NBA player is represented as a vector of these advanced stats. We then compute
+            <span className="accent"> cosine similarity</span> between every CBB
+            player (x) and every NBA player (y):
+          </p>
+
+          <p className="equation">
+            similarity(x, y) = (x · y) / (‖x‖ ‖y‖)
+          </p>
+
+          <p>
+            For each CBB player, we rank all NBA players by similarity and select the{" "}
+            <span className="accent">top 3</span> as that player’s NBA comps.
+          </p>
+
+          <p>
+            <span className="accent">Limitations & future improvements</span>:
+            <br />
+            • Expand datasets with more advanced stats
+            <br />
+            • Account for era and league differences between CBB and NBA (ex. weigh 3PA less in modern era)
+          </p>
+
+          <button
+            className="button-primary"
+            onClick={() => setShowInfo(false)}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+
+
     </div>
   );
 }
