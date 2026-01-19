@@ -174,6 +174,9 @@ export default function App() {
             • Expand datasets with more advanced stats
             <br />
             • Account for era/league (ex. weigh 3PA less in modern era)
+            <br />
+            • I wanted to avoid positional filtering as the NBA strays away from traditional positions, but this leads to bad comps,
+            like Stephen Curry comps to Lebron & Kobe. Possible solution: consider height/weight data
           </p>
 
 
